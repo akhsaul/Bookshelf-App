@@ -1,0 +1,28 @@
+* {
+    font-family: 'Open Sans', sans-serif, var(--bs-font-sans-serif);
+}
+
+:root {
+    --bs-primary: #d2b48c;
+    --bs-primary-rgb: 210, 180, 140;
+}
+
+.btn-primary {
+    background-color: #d2b48c !important;
+    border-color: #d2b48c !important;
+}
+
+.btn-primary:hover {
+    background-color: #c0995e !important;
+    border-color: #c0995e !important;
+}
+
+.btn-check:checked + .btn-primary {
+    background-color: #c0995e !important;
+    border-color: #c0995e !important;
+}
+
+header {
+    background-color: var(--bs-primary);
+    color: white;
+}

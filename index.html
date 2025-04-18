@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bookshelf App</title>
+        <link href="css/bootstrap.css" rel="stylesheet" />
+        <link href="css/custom.css" rel="stylesheet" />
+    </head>
+    <body>
+        <header class="p-2 justify-content-center d-flex">
+            <h1 class="fw-bold">Bookshelf App</h1>
+        </header>
+        <main
+            class="container-fluid d-flex flex-column align-items-center mt-4"
+        >
+            <section class="col-md-6 border border-primary rounded mb-4 p-2">
+                <h2 class="text-center" id="addFormTitle">Tambah Buku Baru</h2>
+                <form
+                    id="bookForm"
+                    data-testid="bookForm"
+                    aria-labelledby="addFormTitle"
+                    class="mb-3 row justify-content-center"
+                >
+                    <div class="mb-3 row">
+                        <label
+                            for="bookFormTitle"
+                            class="col-sm-3 col-form-label"
+                            >Judul</label
+                        >
+                        <div class="col-sm-9">
+                            <input
+                                class="form-control"
+                                id="bookFormTitle"
+                                type="text"
+                                required
+                                data-testid="bookFormTitleInput"
+                                placeholder="Judul"
+                                aria-placeholder="Judul"
+                            />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label
+                            for="bookFormAuthor"
+                            class="col-sm-3 col-form-label"
+                            >Penulis</label
+                        >
+                        <div class="col-sm-9">
+                            <input
+                                class="form-control"
+                                id="bookFormAuthor"
+                                type="text"
+                                required
+                                data-testid="bookFormAuthorInput"
+                                placeholder="Penulis"
+                                aria-placeholder="Penulis"
+                            />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label
+                            for="bookFormYear"
+                            class="col-sm-3 col-form-label"
+                            >Tahun</label
+                        >
+                        <div class="col-sm-9">
+                            <input
+                                class="form-control"
+                                id="bookFormYear"
+                                type="number"
+                                required
+                                data-testid="bookFormYearInput"
+                                placeholder="Tahun"
+                                aria-placeholder="Tahun"
+                            />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label
+                            for="bookFormIsComplete"
+                            class="col-sm-3 col-form-label"
+                            >Selesai dibaca</label
+                        >
+                        <div class="col-sm-9 align-self-center">
+                            <input
+                                class="form-check-input"
+                                id="bookFormIsComplete"
+                                type="checkbox"
+                                data-testid="bookFormIsCompleteCheckbox"
+                            />
+                        </div>
+                    </div>
+                    <button
+                        class="btn btn-primary col-11"
+                        id="bookFormSubmit"
+                        type="submit"
+                        data-testid="bookFormSubmitButton"
+                    >
+                        Masukkan Buku
+                    </button>
+                </form>
+            </section>
+            <section class="col-md-6 border border-primary rounded mb-4 p-2">
+                <h2 class="text-center" id="searchFormTitle">Cari Buku</h2>
+                <form
+                    id="searchBook"
+                    data-testid="searchBookForm"
+                    class="mb-3 row justify-content-center"
+                    aria-labelledby="searchFormTitle"
+                >
+                    <div class="col-auto">
+                        <label for="searchBookTitle" class="col-form-label"
+                            >Judul</label
+                        >
+                    </div>
+                    <div class="col-sm-9">
+                        <input
+                            class="form-control"
+                            id="searchBookTitle"
+                            type="text"
+                            data-testid="searchBookFormTitleInput"
+                            placeholder="Judul"
+                            aria-placeholder="Judul"
+                        />
+                    </div>
+                    <div class="col-auto">
+                        <button
+                            class="btn btn-primary"
+                            id="searchSubmit"
+                            type="submit"
+                            data-testid="searchBookFormSubmitButton"
+                        >
+                            Cari
+                        </button>
+                    </div>
+                </form>
+            </section>
+            <div
+                class="d-flex flex-row justify-content-evenly align-items-start w-75"
+            >
+                <section
+                    class="col-md-5 border border-primary rounded mb-4 p-3"
+                    aria-labelledby="incompleteBookListTitle"
+                >
+                    <h2 class="text-center" id="incompleteBookListTitle">
+                        Belum selesai dibaca
+                    </h2>
+                    <div
+                        id="incompleteBookList"
+                        data-testid="incompleteBookList"
+                        class="p-3"
+                        aria-live="assertive"
+                    ></div>
+                </section>
+                <section
+                    class="col-md-5 border border-primary rounded mb-4 p-3"
+                    aria-labelledby="completeBookListTitle"
+                >
+                    <h2 class="text-center" id="completeBookListTitle">
+                        Selesai dibaca
+                    </h2>
+                    <div
+                        id="completeBookList"
+                        data-testid="completeBookList"
+                        class="p-3"
+                        aria-live="assertive"
+                    ></div>
+                </section>
+            </div>
+        </main>
+        <div
+            class="modal fade"
+            id="modal"
+            tabindex="-1"
+            aria-labelledby="modalTitle"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form id="updateBookForm" aria-labelledby="modalTitle">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="modalTitle">
+                                Ubah Data Buku
+                            </h1>
+                            <button
+                                type="button"
+                                class="btn-close btnCloseModal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3 row">
+                                <label
+                                    for="updateBookFormTitle"
+                                    class="col-sm-4 col-form-label"
+                                    >Judul</label
+                                >
+                                <div class="col-sm-8">
+                                    <input
+                                        class="form-control"
+                                        id="updateBookFormTitle"
+                                        type="text"
+                                        placeholder="Judul"
+                                        aria-placeholder="Judul"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                    for="updateBookFormAuthor"
+                                    class="col-sm-4 col-form-label"
+                                    >Penulis</label
+                                >
+                                <div class="col-sm-8">
+                                    <input
+                                        class="form-control"
+                                        id="updateBookFormAuthor"
+                                        type="text"
+                                        placeholder="Penulis"
+                                        aria-placeholder="Penulis"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                    for="updateBookFormYear"
+                                    class="col-sm-4 col-form-label"
+                                    >Tahun</label
+                                >
+                                <div class="col-sm-8">
+                                    <input
+                                        class="form-control"
+                                        id="updateBookFormYear"
+                                        type="number"
+                                        placeholder="Tahun"
+                                        aria-placeholder="Tahun"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                    for="updateBookFormIsComplete"
+                                    class="col-sm-4 col-form-label"
+                                    >Selesai dibaca</label
+                                >
+                                <div class="col-sm-8 align-self-center">
+                                    <input
+                                        class="form-check-input"
+                                        id="updateBookFormIsComplete"
+                                        type="checkbox"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                type="button"
+                                class="btn btn-secondary btnCloseModal"
+                            >
+                                Batalkan
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                id="updateBookFormButton"
+                            >
+                                Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script defer src="js/ui.js"></script>
+        <script defer src="js/storage.js"></script>
+        <script defer src="js/main.js"></script>
+    </body>
+</html>
